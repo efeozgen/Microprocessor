@@ -69,6 +69,9 @@ for instruction in instructions:
 
 hex_instructions = [hex(int(inst, 2))[2:].zfill(5) for inst in binary_instructions]
 
-with open('output.hex', 'w') as file:
+with open('output.txt', 'w') as file:
     file.write("v2.0 raw\n")
     file.write(' '.join(hex_instructions))
+
+with open('output.hex', 'w') as file:
+    file.write('\n'.join(hex_instructions))
