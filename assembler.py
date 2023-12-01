@@ -2,8 +2,6 @@ def turnToBinary(decimalNum):
     binNum = format(decimalNum, '0{}b'.format(4))
     return binNum
 
-
-
 def assemble(instruction):
     opcode = {
         'ADD': '0000',
@@ -31,24 +29,31 @@ def assemble(instruction):
     
     # Get opcode and convert to binary
     binary_instruction = opcode[op]
-    
-    # Convert operands to binary
-    for operand in operands:
-        if operand.startswith('R'):
-            if len(operand)==3:
-                register_num = int(operand[1])
-                binary_instruction += turnToBinary(register_num)
+    if op!="JUMP":
+        for operand in operands:
+            if operand.startswith('R'):
+                if len(operand)==3:
+                    register_num = int(operand[1])
+                    binary_instruction += turnToBinary(register_num)
+                else:
+                    register_num = int(operand[1:3])
+                    binary_instruction += turnToBinary(register_num)
             else:
-                register_num = int(operand[1:3])
-                binary_instruction += turnToBinary(register_num)
+                # Assume immediate value
+                immediate_val = int(operand)
+                binary_instruction += turnToBinary(immediate_val)
+        
+        # Pad the binary instruction to 18 digits
+        binary_instruction = binary_instruction.ljust(18, '0')    
+        return binary_instruction
+    else: 
+        immediate_val = int(operands[0])
+        if(immediate_val >= 0):
+            binary_instruction += '0' + turnToBinary(immediate_val)    
         else:
-            # Assume immediate value
-            immediate_val = int(operand)
-            binary_instruction += turnToBinary(immediate_val)
-    
-    # Pad the binary instruction to 18 digits
-    binary_instruction = binary_instruction.ljust(18, '0')    
-    return binary_instruction
+            binary_instruction += '1' + turnToBinary(immediate_val)
+        binary_instruction = binary_instruction.ljust(18, '0')    
+        return binary_instruction
 
 # Read instructions from a file
 with open('input.txt', 'r') as file:
