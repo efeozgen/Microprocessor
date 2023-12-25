@@ -2,20 +2,20 @@ currentTotalBit = 4
 
 opcode = {
         'ADD': '0000',
+        'AND': '0001',
+        'NAND': '0010',
+        'NOR': '0011',
         'ADDI': '0100',
+        'ANDI': '0101',
         'LD': '0110',
         'ST': '0111',
         'CMP': '1000',
+        'JUMP': '1001',
         'JE': '1010',
         'JA': '1011',
         'JB': '1100',
         'JAE': '1101',
-        'JBE': '1110',
-        'AND': '0001',
-        'NOR': '0011',
-        'ANDI': '0101',
-        'NAND': '0010',
-        'JUMP': '1001'
+        'JBE': '1110'
     }
 
 def turnToBinary(decimalNum):
